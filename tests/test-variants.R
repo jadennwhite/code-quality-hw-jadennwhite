@@ -75,7 +75,7 @@ test_that("calculations are correct with empty and all missing input", {
 test_that("missing rate threshold functions correctly", {
     results <- summarize_variant(c(1, NA, NA, NA, NA))
     expect_equal(results$missing_rate, 0.8)
-    expect_true(!results$keep)
+    expect_false(results$keep)
     
     results <- summarize_variant(c(2, 1, 2, 1, NA))
     expect_equal(results$missing_rate, 0.2)
@@ -83,9 +83,14 @@ test_that("missing rate threshold functions correctly", {
     
     results <- summarize_variant(c(2, 1, 2, 1, NA), max_missing = 0.1)
     expect_equal(results$missing_rate, 0.2)
-    expect_true(!results$keep)
+    expect_false(results$keep)
     
     results <- summarize_variant(c(1, 1, 1, NA, NA), max_missing = 0.5)
+    expect_equal(results$missing_rate, 0.4)
+    expect_true(results$keep)
+    
+    #specifically tests for inclusion
+    results <- summarize_variant(c(1, 1, 1, NA, NA), max_missing = 0.4)
     expect_equal(results$missing_rate, 0.4)
     expect_true(results$keep)
 })
@@ -97,13 +102,18 @@ test_that("maf threshold functions correctly", {
     
     results <- summarize_variant(c(0, 0, 0, 1))
     expect_equal(results$maf, 0.125)
-    expect_true(!results$keep)
+    expect_false(results$keep)
     
     results <- summarize_variant(c(0, 0, 1, 1), min_maf = 0.3)
     expect_equal(results$maf, 0.25)
     expect_false(results$keep)
     
     results <- summarize_variant(c(0, 0, 0, 1), min_maf = 0.1)
+    expect_equal(results$maf, 0.125)
+    expect_true(results$keep)
+    
+    #specifically tests for inclusion
+    results <- summarize_variant(c(0, 0, 0, 1), min_maf = 0.125)
     expect_equal(results$maf, 0.125)
     expect_true(results$keep)
 })
