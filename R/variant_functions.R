@@ -61,7 +61,7 @@ summarize_variant <- function(genotypes, min_maf = 0.25,
     n_called <- length(genotypes[!is.na(genotypes)])
     
     #Number missing divided by total length
-    missing_rate <- (n_called)/length(genotypes) #changed
+    missing_rate <- (length(genotypes) - n_called)/length(genotypes)
     
     #Minor allele frequency
     maf <- calculate_maf(genotypes, na_rm = TRUE)
