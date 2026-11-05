@@ -7,7 +7,7 @@ test_that("MAF counts allele copies among observed diploid genotypes", {
 })
 
 #calculate_maf tests
-test_that("MAF is correct with normal vectors"{
+test_that("MAF is correct with normal vectors", {
     #tests if the function handles a case where the counted allele is common
     expect_equal(calculate_maf(c(2, 2, 2, 1, 2, 0)), 0.25)
     
@@ -21,7 +21,7 @@ test_that("MAF is correct with normal vectors"{
     expect_equal(calculate_maf(1), 0.5)
 })
 
-test_that("MAF calculation drops missing values correctly when na_rm is TRUE"{
+test_that("MAF calculation drops missing values correctly when na_rm is TRUE", {
     expect_equal(calculate_maf(c(0, 0, NA, 1, 1)), 0.25)
 })
 
@@ -32,14 +32,14 @@ test_that("MAF returns NA when na_rm is FALSE"{
     expect_equal(calculate_maf(c(0, 0, 1, 1), na_rm = FALSE), 0.25)
 })
 
-test_that("empty and completely missing input returns NA"{
+test_that("empty and completely missing input returns NA", {
     expect_true(is.na(calculate_maf(numeric(0))))
                  
     expect_true(is.na(calculate_maf(c(NA_real_, NA_real_))))
 })
 
 #summarize_variant tests
-test_that("calculations are correct with full input"{
+test_that("calculations are correct with full input", {
     results <- summarize_variant(c(0, 0, 1, 1))
     expect_equal(nrow(results), 1)
     expect_equal(results[1], 4)
@@ -48,7 +48,7 @@ test_that("calculations are correct with full input"{
     expect_true(results[4])
 })
 
-test_that("calculations are correct with some missing input"{
+test_that("calculations are correct with some missing input", {
     results <- summarize_variant(c(0, 0, NA, 1, 0))
     expect_equal(nrow(results), 1)
     expect_equal(results[1], 4)
@@ -57,7 +57,7 @@ test_that("calculations are correct with some missing input"{
     expect_true(!results[4])
 })
 
-test_that("calculations are correct with empty and all missing input"{
+test_that("calculations are correct with empty and all missing input", {
     results <- summarize_variant(numeric(0))
     expect_equal(results[1], 0)
     expect_true(is.na(results[2]))
@@ -73,7 +73,7 @@ test_that("calculations are correct with empty and all missing input"{
 })
 
 #threshold tests of summarize_variants
-test_that("missing rate threshold functions correctly"{
+test_that("missing rate threshold functions correctly", {
     results <- summarize_variant(c(1, NA, NA, NA, NA))
     expect_equal(results[2], 0.8)
     expect_true(!results[4])
@@ -91,7 +91,7 @@ test_that("missing rate threshold functions correctly"{
     expect_true(!results[4])
 })
 
-test_that("maf threshold functions correctly"{
+test_that("maf threshold functions correctly", {
     results <- summarize_variant(c(1, 1, 1, 1))
     expect_equal(results[3], 0.5)
     expect_true(results[4])
@@ -111,7 +111,7 @@ test_that("maf threshold functions correctly"{
 
 
 #error checking
-test_that("maf throws errors when given invalid genotypes"{
+test_that("maf throws errors when given invalid genotypes", {
     expect_error(calculate_maf(c(0, 1, 2, 3)))
     
     expect_error(calculate_maf(c(0, -1)))
@@ -125,7 +125,7 @@ test_that("maf throws errors when given invalid genotypes"{
 })
 
 
-test_that("maf throws errors when given invalid na_rm"{
+test_that("maf throws errors when given invalid na_rm", {
     expect_error(calculate_maf(c(0, 1, 2, 1), na_rm = 1))
     
     expect_error(calculate_maf(c(0, 1, 2, 1), na_rm = "a"))
@@ -135,7 +135,7 @@ test_that("maf throws errors when given invalid na_rm"{
 })
 
 
-test_that("summarize_variants throws errors when invalid settings are given"{
+test_that("summarize_variants throws errors when invalid settings are given", {
     expect_error(summarize_variant(c(0, 1, 2, 1), min_maf = -.01))
     
     expect_error(summarize_variant(c(0, 1, 2, 1), min_maf = Inf))
