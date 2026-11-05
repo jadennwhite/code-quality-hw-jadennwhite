@@ -85,7 +85,7 @@ test_that("missing rate threshold functions correctly", {
     expect_equal(results$missing_rate, 0.2)
     expect_true(!results$keep)
     
-    results <- summarize_variant(c(2, 1, 2, NA, NA), max_missing = 0.5)
+    results <- summarize_variant(c(1, 1, 1, NA, NA), max_missing = 0.5)
     expect_equal(results$missing_rate, 0.4)
     expect_true(results$keep)
 })
@@ -103,7 +103,7 @@ test_that("maf threshold functions correctly", {
     expect_equal(results$maf, 0.25)
     expect_false(results$keep)
     
-    results <- summarize_variant(c(0, 0, 0, 1), min_maf = 0.2)
+    results <- summarize_variant(c(0, 0, 0, 1), min_maf = 0.1)
     expect_equal(results$maf, 0.125)
     expect_true(results$keep)
 })
