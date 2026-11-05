@@ -25,7 +25,7 @@ test_that("MAF calculation drops missing values correctly when na_rm is TRUE", {
     expect_equal(calculate_maf(c(0, 0, NA, 1, 1)), 0.25)
 })
 
-test_that("MAF returns NA when na_rm is FALSE"{
+test_that("MAF returns NA when na_rm is FALSE", {
     expect_equal(calculate_maf(c(0, 0, NA, 1, 1), na_rm = FALSE), NA)
     
     #checks if this is done only when something is missing
